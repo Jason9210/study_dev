@@ -10,6 +10,10 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>spring-mybatis</module>
+        <module>concurrent-study</module>
+        <module>jvm-study</module>
+        <module>zookeeper</module>
+        <module>zkui</module>
     </modules>
 
 

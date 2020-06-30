@@ -2,6 +2,8 @@ package com.study.mybatis.controllers;
 
 import com.study.mybatis.entity.User;
 import com.study.mybatis.mappers.UserMapper;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -25,6 +27,26 @@ public class CacheController implements ApplicationContextAware {
 
     @RequestMapping("/select")
     public String select(){
+        selectByIdList();
+        return "查询完成";
+    }
+
+    @RequestMapping("/select1")
+    public String select1(){
+        SqlSessionFactory factory = applicationContext.getBean(SqlSessionFactory.class);
+        SqlSession sqlSession = factory.openSession(true);
+       UserMapper userMapper =  sqlSession.getMapper(UserMapper.class);
+        List<Long> ids = new ArrayList<>();
+        ids.add(Long.valueOf(1));
+        ids.add(Long.valueOf(2));
+        userMapper.selectList(ids);
+        userMapper.selectList(ids);
+     /*   selectByIdList();
+        selectByIdList();*/
+        return "查询完成";
+    }
+
+    private List<User> selectByIdList(){
         List<Long> ids = new ArrayList<>();
         ids.add(Long.valueOf(1));
         ids.add(Long.valueOf(2));
@@ -32,7 +54,7 @@ public class CacheController implements ApplicationContextAware {
         List<User> list = userMapper.selectList(ids);
         System.out.println(list==null?0:list.size());
         System.out.println("查询完成");
-        return "查询完成";
+        return list;
     }
 
     @RequestMapping("/update")

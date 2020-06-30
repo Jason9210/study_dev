@@ -4,6 +4,7 @@
 
 <mapper namespace="com.study.mybatis.mappers.UserMapper">
 
+    <cache/>
     <resultMap id="user" type="com.study.mybatis.entity.User">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
